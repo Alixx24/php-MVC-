@@ -76,5 +76,6 @@ class Register extends Controller
         curl_close($curl);
 
         echo $data;
+        
     }
 }
