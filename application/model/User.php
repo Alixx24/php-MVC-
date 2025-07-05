@@ -2,7 +2,7 @@
 
 namespace Application\Model;
 
-class Category extends Model
+class User extends Model
 {
 
     public function all()
@@ -16,17 +16,12 @@ class Category extends Model
         return $result;
     }
 
-    public function articles($cat_id)
-    { 
-        $query = "SELECT * FROM `articles` WHERE cat_id = ? ";
-        $result = $this->query($query, array($cat_id))->fetchAll();
-        $this->closeConnection();
-        return $result;
-    }
+   
+    
 
     public function find($id)
     { 
-        $query = "SELECT * FROM `categories` WHERE id = ? ";
+        $query = "SELECT * FROM `users` WHERE id = ? ";
         $result = $this->query($query, array($id))->fetch();
         $this->closeConnection();
         return $result;
@@ -34,7 +29,7 @@ class Category extends Model
 
     public function insert($values)
     { 
-        $query = "INSERT INTO `categories` ( `name`, `description`, created_at) VALUES ( ?, ?, now() );";
+        $query = "INSERT INTO `users` ( `email`, `username`, `password`, created_at) VALUES ( ?, ?, ?, now() );";
         $this->execute($query, array_values($values));
         $this->closeConnection();
     }

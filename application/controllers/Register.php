@@ -3,7 +3,7 @@
 namespace Application\Controllers;
 
 use Application\Model\Category;
-use Application\Model\Article;
+use Application\Model\User as UserModel;
 
 
 class Register extends Controller
@@ -30,9 +30,20 @@ class Register extends Controller
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
+        $userModel = new UserModel();
 
-        echo "ثبت‌نام با موفقیت انجام شد!";
-        var_dump(123);
+        $result = $userModel->insert([
+            'email' => $email,
+            'username' => $username,
+            'password' => $password,
+        ]);
+
+        if ($result) {
+            echo "ثبت‌نام با موفقیت انجام شد!";
+        } else {
+            echo "خطا در ثبت‌نام";
+        }
+        var_dump($result);
         die;
     }
 
@@ -76,6 +87,14 @@ class Register extends Controller
         curl_close($curl);
 
         echo $data;
-        
+    }
+
+
+    public function all()
+    {
+        $user = new UserModel();
+        $users = $user->all();
+        var_dump($users);
+        die;
     }
 }
