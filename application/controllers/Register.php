@@ -26,25 +26,47 @@ class Register extends Controller
             die('CSRF token failed');
         }
 
+
         $email = $_POST['email'] ?? '';
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
         $userModel = new UserModel();
+        $userFind = $userModel->findByName($_POST['username']);
 
-        $result = $userModel->insert([
-            'email' => $email,
-            'username' => $username,
-            'password' => $password,
-        ]);
 
-        if ($result) {
-            echo "ثبت‌نام با موفقیت انجام شد!";
+        if ($userFind != false) {
+            echo "این نام کاربری انتخاب شده از پیش";
         } else {
-            echo "خطا در ثبت‌نام";
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+                $email = trim($_POST['email'] ?? '');
+                $username = trim($_POST['username'] ?? '');
+                $userPassword = $_POST['password'] ?? '';
+
+
+
+                $password = password_hash($userPassword, PASSWORD_BCRYPT);
+
+
+
+
+                $userModel = new UserModel();
+
+                $result = $userModel->insert([
+                    'email' => $email,
+                    'username' => $username,
+                    'password' => $password,
+
+                ]);
+
+                echo "ثبت‌نام با موفقیت انجام شد!";
+                var_dump($result);
+                die;
+            } else {
+                die('ایمیل نامعتبره');
+            }
         }
-        var_dump($result);
-        die;
     }
 
     public function curl()

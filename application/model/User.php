@@ -27,6 +27,14 @@ class User extends Model
         return $result;
     }
 
+     public function findByName($id)
+    { 
+        $query = "SELECT * FROM `users` WHERE username = ? ";
+        $result = $this->query($query, array($id))->fetch();
+        $this->closeConnection();
+        return $result;
+    }
+
     public function insert($values)
     { 
         $query = "INSERT INTO `users` ( `email`, `username`, `password`, created_at) VALUES ( ?, ?, ?, now() );";
