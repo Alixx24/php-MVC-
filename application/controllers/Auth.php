@@ -6,7 +6,7 @@ use Application\Model\Category;
 use Application\Model\User as UserModel;
 
 
-class Register extends Controller
+class Auth extends Controller
 {
 
 
@@ -118,5 +118,38 @@ class Register extends Controller
         $users = $user->all();
         var_dump($users);
         die;
+    }
+
+    public function login()
+    {
+        return $this->view('app.auth.login');
+    }
+
+    public function loginProcess()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            die('invalid Request Method');
+        }
+
+        if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            die('csrf token failed');
+        }
+
+        $userNameOrEmail = trim($_POST['usernameOrEmail'] ?? '');
+        $password = $_POST['password'];
+
+        if (empty($userNameOrEmail) || empty($password)) {
+            die('لطفا نام کاربری / ایمیل و رمز عبور وارد کنید');
+        }
+        $userModel = new UserModel();
+        $user = $userModel->findByUsernameOrEmail($userNameOrEmail);
+
+        if (!$user) {
+            die('رمز اشتباهه');
+        }
+
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        echo 'ورود موفقیت امیز بود';
     }
 }

@@ -63,34 +63,30 @@
 </head>
 
 <body>
-    <?php
+  <?php
 
-if (empty($_SESSION['csrf_token'])) {
+
+if(empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 ?>
-    <div class="container-flex">
-        <div class="form">
-            <form action="<?php $this->url('Auth/register'); ?>" method="post">
-                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                <div class="email">
-                    <label for="email">Your Email</label>
-                    <input type="email" name="email" id="email" />
-                </div>
+<div class="container-flex">
+    <div class="form">
+        <form action="<?= $this->url('Auth/loginProcess'); ?>" method="post">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+            <div class="usernameOrEmail">
+                <label for="usernameOrEmail">نام کاربری یا ایمیل</label>
+                <input type="text" name="usernameOrEmail" id="usernameOrEmail" required />
+            </div>
 
-                <div class="username">
-                    <label for="username">User Name</label>
-                    <input type="text" name="username" id="username" />
-                </div>
-
-                <div class="password">
-                    <label for="password">Your Password</label>
-                    <input type="password" name="password" id="password" />
-                </div>
-                <button class="submit-register">Submit !</button>
-            </form>
-        </div>
+            <div class="password">
+                <label for="password">رمز عبور</label>
+                <input type="password" name="password" id="password" required />
+            </div>
+            <button class="submit-register">ورود</button>
+        </form>
     </div>
-</body>
+</div>
+
 
 </html>

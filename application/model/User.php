@@ -35,6 +35,14 @@ class User extends Model
         return $result;
     }
 
+    public function findByUsernameOrEmail($userNameOrEmail)
+    {
+        $query = "SELECT * FROM `users` WHERE username = ? OR email = ?";
+        $result = $this->query($query, array($userNameOrEmail, $userNameOrEmail))->fetch();
+        $this->closeConnection();
+        return $result;
+    }
+
     public function insert($values)
     { 
         $query = "INSERT INTO `users` ( `email`, `username`, `password`, created_at) VALUES ( ?, ?, ?, now() );";
