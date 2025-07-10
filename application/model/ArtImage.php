@@ -2,23 +2,22 @@
 
 namespace Application\Model;
 
-class Article extends Model
+class ArtImage extends Model
 {
     public function all()
     {
-        $query = "SELECT * FROM articles";
+        $query = "SELECT * FROM article_images";
         return $this->query($query)->fetchAll();
     }
 
-    public function find($id)
-    {
-        $query = "SELECT articles.*, categories.name as category
-                  FROM articles
-                  LEFT JOIN categories ON categories.id = articles.cat_id
-                  WHERE articles.id = ?";
+  public function find($id)
+{
+    $query = "SELECT article_images.*
+              FROM article_images
+              WHERE article_images.article_id = ?";
 
-        return $this->query($query, [$id])->fetch();
-    }
+    return $this->query($query, [$id])->fetchAll();
+}
 
     public function insert($values)
     {
@@ -28,7 +27,7 @@ class Article extends Model
             $values['cat_id'],
             $values['body']
         ]);
-        return $this->connection->lastInsertId();  
+        return $this->connection->lastInsertId();  // استفاده از پراپرتی connection برای گرفتن آخرین آیدی
     }
 
     public function update($id, $values)

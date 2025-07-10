@@ -4,6 +4,7 @@ namespace Application\Controllers;
 
 use Application\Model\Article as ArticleModel;
 use Application\Model\Category;
+use Application\Model\ArtImage;
 
 
 class Article extends Controller
@@ -26,10 +27,10 @@ class Article extends Controller
     {
         $article = new ArticleModel();
 
-     
+
         $article_id = $article->insert($_POST);
 
-       
+
         if (isset($_FILES['images']) && !empty($_FILES['images']['name'][0])) {
             $total = count($_FILES['images']['name']);
             $targetDir = "uploads/";
@@ -46,7 +47,7 @@ class Article extends Controller
                     $targetFilePath = $targetDir . $fileName;
 
                     if (move_uploaded_file($tmpFilePath, $targetFilePath)) {
-                        
+
                         $article->insertImage($article_id, $targetFilePath);
                     }
                 }
@@ -61,11 +62,19 @@ class Article extends Controller
 
     public function edit($id)
     {
+        $artImg = new ArtImage();
+        $articleImg = $artImg->find($id);
+      
         $category = new Category();
         $categories = $category->all();
         $ob_article = new ArticleModel();
         $article = $ob_article->find($id);
-        return $this->view('panel.article.edit', compact('categories', 'article'));
+
+
+        $artImg = new ArtImage();
+        $articleImg = $artImg->all();
+
+        return $this->view('panel.article.edit', compact('categories', 'article', 'articleImg'));
     }
 
     public function update($id)

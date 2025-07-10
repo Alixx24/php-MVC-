@@ -13,6 +13,8 @@
             <?php } ?>
         </select>
     </section>
+
+    <img src="" alt="">
     <section class="form-group">
         <label for="body">Body</label>
         <textarea class="form-control" id="body" name="body" rows="5"><?php echo $article['body']; ?></textarea>
