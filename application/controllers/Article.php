@@ -71,8 +71,6 @@ class Article extends Controller
         $article = $ob_article->find($id);
 
 
-        $artImg = new ArtImage();
-        $articleImg = $artImg->all();
 
         return $this->view('panel.article.edit', compact('categories', 'article', 'articleImg'));
     }

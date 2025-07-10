@@ -13,8 +13,19 @@
             <?php } ?>
         </select>
     </section>
+<?php
 
-    <img src="" alt="">
+global $base_url;
+$baseUrl = $base_url; 
+
+
+foreach ($articleImg as $img)
+{
+    echo '<img src="' . htmlspecialchars($base_url . $img['filename']) . '" alt="Article Image" style="max-width:100px; margin:10px;">';
+}
+?>
+
+
     <section class="form-group">
         <label for="body">Body</label>
         <textarea class="form-control" id="body" name="body" rows="5"><?php echo $article['body']; ?></textarea>
