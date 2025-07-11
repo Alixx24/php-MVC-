@@ -74,6 +74,33 @@ class Article extends Controller
 
         return $this->view('panel.article.edit', compact('categories', 'article', 'articleImg'));
     }
+public function imageDelete()
+{
+    // دریافت ورودی خام
+    $inputRaw = file_get_contents('php://input');
+    error_log("Raw input: " . $inputRaw);
+
+    // دیکد کردن JSON
+    $input = json_decode($inputRaw, true);
+    error_log("Decoded input: " . print_r($input, true));
+
+    $imgId = $input['id'] ?? null;
+
+    if (!$imgId) {
+        echo json_encode(['success' => false, 'message' => 'Photo ID not send']);
+        return;
+    }
+
+    $artImg = new ArtImage();
+    $deleted = $artImg->delete($imgId);
+
+    if ($deleted) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'not deleted']);
+    }
+}
+
 
     public function update($id)
     {

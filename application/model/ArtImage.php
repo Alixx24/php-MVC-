@@ -41,11 +41,11 @@ class ArtImage extends Model
         ]);
     }
 
-    public function delete($id)
+    public function delete($imgId)
     {
        
-        $query = "DELETE FROM articles WHERE id = ?";
-        return $this->execute($query, [$id]);
+        $query = "DELETE FROM article_images WHERE id = ?";
+        return $this->execute($query, [$imgId]);
     }
 
     public function insertImage($article_id, $filename)
