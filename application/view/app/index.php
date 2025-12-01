@@ -1,4 +1,5 @@
 <?php $this->include("app.layouts.header", ['categories' => $categories]); ?>
+<?php echo "welcome " . $_SESSION['username']; ?>
 
     <section class="container my-5">
         <!-- Example row of columns -->

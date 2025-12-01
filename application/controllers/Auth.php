@@ -122,6 +122,7 @@ class Auth extends Controller
 
     public function login()
     {
+        
         return $this->view('app.auth.login');
     }
 

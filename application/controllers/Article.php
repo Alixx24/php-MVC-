@@ -18,6 +18,7 @@ class Article extends Controller
 
     public function create()
     {
+        print_r('asd');
         $category = new Category();
         $categories = $category->all();
         return $this->view('panel.article.create', compact('categories'));
@@ -107,7 +108,7 @@ class Article extends Controller
         $article = new ArticleModel();
         $article->update($id, $_POST);
 
-        $this->imageArticleHandler($id, $_FILES); // پارامترها اصلاح شدند
+        $this->imageArticleHandler($id, $_FILES); 
 
         return $this->redirect('article');
     }
